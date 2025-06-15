@@ -1,595 +1,620 @@
 <!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Coach - Expert Financial Guidance</title>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sarah Johnson - Financial Coach</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        :root {
-            --primary-color: #D4A574;
-            --secondary-color: #F5E6D3;
-            --accent-color: #8B4513;
-            --light-coffee: #F9F5F0;
-            --text-dark: #3E2723;
-            --text-light: #6D4C41;
-        }
+      body {
+        font-family: "Arial", sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background-color: var(--light-coffee);
-        }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+      /* Header */
+      header {
+        background: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+      }
 
-        /* Header */
-        header {
-            background: rgba(244, 235, 225, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+      }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2d5a27;
+      }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--accent-color);
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #2d5a27;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+      .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: #333;
+        margin: 3px 0;
+        transition: 0.3s;
+      }
+
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(135deg, #4a7c59 0%, #2d5a27 100%);
+        color: white;
+        padding: 120px 0 80px;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+
+      .btn {
+        display: inline-block;
+        background: #fff;
+        color: #2d5a27;
+        padding: 12px 30px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: transform 0.3s;
+        font-weight: bold;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      /* About Section */
+      .about {
+        padding: 80px 0;
+        background: #f8f9fa;
+      }
+
+      .about-content {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .about-image {
+        text-align: center;
+      }
+
+      .about-image img {
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid #4a7c59;
+      }
+
+      .about-text h2 {
+        color: #2d5a27;
+        margin-bottom: 1rem;
+        font-size: 2.5rem;
+      }
+
+      .about-text p {
+        margin-bottom: 1rem;
+        color: #666;
+      }
+
+      /* Tariffs Section */
+      .tariffs {
+        padding: 80px 0;
+        background: #fff;
+      }
+
+      .section-title {
+        text-align: center;
+        color: #2d5a27;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+      }
+
+      .tariff-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .tariff-card {
+        background: #f8f9fa;
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+        border: 3px solid transparent;
+        transition: all 0.3s;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .tariff-card:hover {
+        border-color: #4a7c59;
+        transform: translateY(-5px);
+      }
+
+      .tariff-card.featured {
+        border-color: #4a7c59;
+        background: #4a7c59;
+        color: white;
+      }
+
+      .tariff-card h3 {
+        color: #2d5a27;
+        margin-bottom: 1rem;
+      }
+
+      .tariff-card.featured h3 {
+        color: white;
+      }
+
+      .price {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      .tariff-card ul {
+        list-style: none;
+        margin-bottom: 2rem;
+      }
+
+      .tariff-card li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* Reviews Section */
+      .reviews {
+        padding: 80px 0;
+        background: #f8f9fa;
+      }
+
+      .review-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .review-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .stars {
+        color: #ffc107;
+        margin-bottom: 1rem;
+      }
+
+      .review-text {
+        font-style: italic;
+        margin-bottom: 1rem;
+        color: #666;
+      }
+
+      .reviewer {
+        font-weight: bold;
+        color: #2d5a27;
+      }
+
+      /* Contact Section */
+      .contact {
+        padding: 80px 0;
+        background: #2d5a27;
+        color: white;
+      }
+
+      .contact h2 {
+        color: white;
+      }
+
+      .contact-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+
+      .contact-info h3 {
+        margin-bottom: 1rem;
+      }
+
+      .contact-info p {
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-links a {
+        color: white;
+        font-size: 1.5rem;
+        transition: color 0.3s;
+      }
+
+      .social-links a:hover {
+        color: #a8d5aa;
+      }
+
+      .contact-form {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 2rem;
+        border-radius: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .form-group textarea {
+        height: 100px;
+        resize: vertical;
+      }
+
+      .btn-submit {
+        background: #4a7c59;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .btn-submit:hover {
+        background: #3a5f47;
+      }
+
+      /* Footer */
+      footer {
+        background: #1a3e1f;
+        color: white;
+        text-align: center;
+        padding: 2rem 0;
+      }
+
+      /* Mobile Styles */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
         }
 
         .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: white;
+          flex-direction: column;
+          padding: 1rem;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: var(--accent-color);
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--light-coffee) 100%);
-            padding: 120px 0 80px;
-            text-align: center;
+        .nav-links.active {
+          display: flex;
         }
 
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--accent-color);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: var(--text-light);
-        }
-
-        .cta-button {
-            background: var(--primary-color);
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .cta-button:hover {
-            background: var(--accent-color);
-        }
-
-        /* About Section */
-        .about {
-            padding: 80px 0;
-            background: white;
+          font-size: 2rem;
         }
 
         .about-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .coach-photo {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .about-text h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--accent-color);
-        }
-
-        .about-text p {
-            margin-bottom: 1rem;
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-
-        /* Tariffs Section */
-        .tariffs {
-            padding: 80px 0;
-            background: var(--light-coffee);
-        }
-
-        .tariffs h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--accent-color);
-        }
-
-        .tariff-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .tariff-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .tariff-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .tariff-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--accent-color);
-        }
-
-        .price {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .tariff-card ul {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .tariff-card li {
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
-        }
-
-        /* Reviews Section */
-        .reviews {
-            padding: 80px 0;
-            background: white;
-        }
-
-        .reviews h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--accent-color);
-        }
-
-        .review-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .review-card {
-            background: var(--secondary-color);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .review-text {
-            font-style: italic;
-            margin-bottom: 1rem;
-            color: var(--text-light);
-        }
-
-        .reviewer {
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 80px 0;
-            background: var(--light-coffee);
-        }
-
-        .contact h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--accent-color);
+          grid-template-columns: 1fr;
+          text-align: center;
         }
 
         .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+          grid-template-columns: 1fr;
         }
 
-        .contact-info {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        .hamburger.active span:nth-child(1) {
+          transform: rotate(-45deg) translate(-5px, 6px);
         }
 
-        .contact-info h3 {
-            margin-bottom: 1rem;
-            color: var(--accent-color);
+        .hamburger.active span:nth-child(2) {
+          opacity: 0;
         }
 
-        .contact-info p {
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
+        .hamburger.active span:nth-child(3) {
+          transform: rotate(45deg) translate(-5px, -6px);
         }
+      }
 
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background: var(--primary-color);
-            color: white;
-            text-align: center;
-            line-height: 40px;
-            border-radius: 50%;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-
-        .social-links a:hover {
-            background: var(--accent-color);
-        }
-
-        .contact-form {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--secondary-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--accent-color);
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background: rgba(244, 235, 225, 0.98);
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                padding-top: 2rem;
-                transition: left 0.3s;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .hamburger.active span:nth-child(1) {
-                transform: rotate(-45deg) translate(-5px, 6px);
-            }
-
-            .hamburger.active span:nth-child(2) {
-                opacity: 0;
-            }
-
-            .hamburger.active span:nth-child(3) {
-                transform: rotate(45deg) translate(-5px, -6px);
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .contact-content {
-                grid-template-columns: 1fr;
-            }
-
-            .tariff-cards,
-            .review-cards {
-                grid-template-columns: 1fr;
-            }
-        }
+      .placeholder-img {
+        width: 250px;
+        height: 250px;
+        background: #e9ecef;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-size: 1.2rem;
+        border: 5px solid #4a7c59;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <nav class="container">
-            <div class="logo">FinanceCoach</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#tariffs">Tariffs</a></li>
-                <li><a href="#reviews">Reviews</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
+      <nav class="container">
+        <div class="logo">FinanceCoach</div>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#tariffs">Services</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </nav>
     </header>
 
     <section class="hero">
-        <div class="container">
-            <h1>Transform Your Financial Future</h1>
-            <p>Professional financial coaching to help you achieve your money goals and build lasting wealth</p>
-            <a href="#contact" class="cta-button">Start Your Journey</a>
-        </div>
+      <div class="container">
+        <h1>Transform Your Financial Future</h1>
+        <p>
+          Professional financial coaching to help you achieve your goals and
+          build lasting wealth
+        </p>
+        <a href="#contact" class="btn">Get Started Today</a>
+      </div>
     </section>
 
     <section id="about" class="about">
-        <div class="container">
-            <div class="about-content">
-                <img src="https://png.pngtree.com/png-vector/20240925/ourlarge/pngtree-perfect-business-lady-png-image_13894445.png" alt="Financial Coach" class="coach-photo">
-                <div class="about-text">
-                    <h2>Meet Your Coach</h2>
-                    <p>With over 10 years of experience in financial planning and wealth management, I help individuals and families take control of their finances and build a secure future.</p>
-                    <p>My approach combines proven financial strategies with personalized coaching to create sustainable money habits that last a lifetime.</p>
-                    <p>Certified Financial Planner (CFP) with expertise in investment planning, debt management, and retirement strategies.</p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="about-content">
+          <div class="about-image">
+            <img
+              src="https://png.pngtree.com/png-vector/20240925/ourlarge/pngtree-perfect-business-lady-png-image_13894445.png"
+              alt="Sarah Johnson"
+            />
+            <!-- Placeholder image if needed -->
+            <!-- <div class="placeholder-img">Sarah Johnson</div> -->
+          </div>
+          <div class="about-text">
+            <h2>About Sarah Johnson</h2>
+            <p>
+              With over 10 years of experience in financial planning and wealth
+              management, I help individuals and families take control of their
+              finances and build a secure future.
+            </p>
+            <p>
+              I hold certifications in Financial Planning (CFP) and have helped
+              over 500 clients achieve their financial goals through
+              personalized coaching and strategic planning.
+            </p>
+            <p>
+              My approach combines practical budgeting strategies with long-term
+              investment planning to create a comprehensive financial roadmap
+              tailored to your unique situation.
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <section id="tariffs" class="tariffs">
-        <div class="container">
-            <h2>Coaching Packages</h2>
-            <div class="tariff-cards">
-                <div class="tariff-card">
-                    <h3>Basic</h3>
-                    <div class="price">$99</div>
-                    <ul>
-                        <li>1-hour consultation</li>
-                        <li>Financial assessment</li>
-                        <li>Basic budget plan</li>
-                        <li>Email support (1 week)</li>
-                    </ul>
-                    <a href="#contact" class="cta-button">Get Started</a>
-                </div>
-                <div class="tariff-card">
-                    <h3>Premium</h3>
-                    <div class="price">$299</div>
-                    <ul>
-                        <li>3 coaching sessions</li>
-                        <li>Comprehensive financial plan</li>
-                        <li>Investment strategy</li>
-                        <li>Monthly check-ins</li>
-                        <li>Email & phone support</li>
-                    </ul>
-                    <a href="#contact" class="cta-button">Get Started</a>
-                </div>
-                <div class="tariff-card">
-                    <h3>VIP</h3>
-                    <div class="price">$599</div>
-                    <ul>
-                        <li>6 coaching sessions</li>
-                        <li>Complete wealth strategy</li>
-                        <li>Tax optimization plan</li>
-                        <li>Quarterly reviews</li>
-                        <li>24/7 priority support</li>
-                        <li>Exclusive resources</li>
-                    </ul>
-                    <a href="#contact" class="cta-button">Get Started</a>
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section-title">Coaching Packages</h2>
+        <div class="tariff-grid">
+          <div class="tariff-card">
+            <h3>Basic Consultation</h3>
+            <div class="price">$150</div>
+            <ul>
+              <li>✓ 1-hour session</li>
+              <li>✓ Financial assessment</li>
+              <li>✓ Basic budget plan</li>
+              <li>✓ Email follow-up</li>
+            </ul>
+            <a href="#contact" class="btn">Choose Plan</a>
+          </div>
+          <div class="tariff-card featured">
+            <h3>Complete Transformation</h3>
+            <div class="price">$500</div>
+            <ul>
+              <li>✓ 4 coaching sessions</li>
+              <li>✓ Comprehensive financial plan</li>
+              <li>✓ Investment strategy</li>
+              <li>✓ Monthly check-ins</li>
+              <li>✓ Email & phone support</li>
+            </ul>
+            <a href="#contact" class="btn">Choose Plan</a>
+          </div>
+          <div class="tariff-card">
+            <h3>Ongoing Support</h3>
+            <div class="price">$200/month</div>
+            <ul>
+              <li>✓ Monthly 1-hour sessions</li>
+              <li>✓ Progress tracking</li>
+              <li>✓ Plan adjustments</li>
+              <li>✓ Unlimited email support</li>
+            </ul>
+            <a href="#contact" class="btn">Choose Plan</a>
+          </div>
         </div>
+      </div>
     </section>
 
     <section id="reviews" class="reviews">
-        <div class="container">
-            <h2>Client Success Stories</h2>
-            <div class="review-cards">
-                <div class="review-card">
-                    <p class="review-text">"Thanks to the coaching, I paid off $30,000 in debt and started investing for my future. The guidance was invaluable!"</p>
-                    <p class="reviewer">- Sarah Johnson</p>
-                </div>
-                <div class="review-card">
-                    <p class="review-text">"Professional, knowledgeable, and truly cares about your success. My financial confidence has completely transformed."</p>
-                    <p class="reviewer">- Michael Chen</p>
-                </div>
-                <div class="review-card">
-                    <p class="review-text">"The investment strategy helped me grow my portfolio by 25% in the first year. Highly recommend!"</p>
-                    <p class="reviewer">- Emily Rodriguez</p>
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section-title">Client Reviews</h2>
+        <div class="review-grid">
+          <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">
+              "Sarah helped me pay off $30,000 in debt and start investing for
+              my future. Her guidance was invaluable!"
+            </p>
+            <p class="reviewer">- Jennifer M.</p>
+          </div>
+          <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">
+              "Professional, knowledgeable, and patient. Sarah made financial
+              planning actually enjoyable and achievable."
+            </p>
+            <p class="reviewer">- David R.</p>
+          </div>
+          <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">
+              "Thanks to Sarah's coaching, I finally have a emergency fund and a
+              clear retirement plan. Highly recommended!"
+            </p>
+            <p class="reviewer">- Maria L.</p>
+          </div>
         </div>
+      </div>
     </section>
 
     <section id="contact" class="contact">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Contact Information</h3>
-                    <p><strong>Phone:</strong> (555) 123-4567</p>
-                    <p><strong>Email:</strong> coach@financecoach.com</p>
-                    <p><strong>Office:</strong> 123 Finance Street, Money City, MC 12345</p>
-                    <p><strong>Hours:</strong> Mon-Fri 9AM-6PM</p>
-                    
-                    <div class="social-links">
-                        <a href="#">📘</a>
-                        <a href="#">🐦</a>
-                        <a href="#">💼</a>
-                        <a href="#">📷</a>
-                    </div>
-                </div>
-                <form class="contact-form">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="cta-button">Send Message</button>
-                </form>
+      <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-content">
+          <div class="contact-info">
+            <h3>Contact Information</h3>
+            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+            <p><i class="fas fa-envelope"></i> sarah@financecoach.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> New York, NY</p>
+
+            <h3>Follow Me</h3>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
             </div>
+          </div>
+          <div class="contact-form">
+            <h3>Send a Message</h3>
+            <form>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required />
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" required></textarea>
+              </div>
+              <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+          </div>
         </div>
+      </div>
     </section>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2025 FinanceCoach. All rights reserved. | Professional Financial Coaching Services</p>
-        </div>
+      <div class="container">
+        <p>&copy; 2024 FinanceCoach. All rights reserved.</p>
+      </div>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
+      // Mobile menu toggle
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".nav-links");
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+        hamburger.classList.toggle("active");
+      });
 
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
             });
+          }
+          // Close mobile menu after clicking
+          navLinks.classList.remove("active");
+          hamburger.classList.remove("active");
         });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+      });
     </script>
-</body>
+  </body>
 </html>
