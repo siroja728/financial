@@ -1,6 +1,9 @@
-import Image, { ImageLoader } from "next/image";
+"use client";
 
-const imageLoader: ImageLoader = ({ src }) => {
+import Image from "next/image";
+import type { ImageLoader } from "next/image";
+
+const imgLoader: ImageLoader = ({ src }) => {
   return src;
 };
 
@@ -12,7 +15,7 @@ function About() {
     >
       <div>
         <Image
-          loader={imageLoader}
+          loader={imgLoader}
           className="rounded-full border-4 border-green-800"
           src="/coach.png"
           width={300}
