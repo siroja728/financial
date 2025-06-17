@@ -16,7 +16,7 @@
 # next.js
 /.next/
 # next.js build output directory. Uncomment when stop using gh-pages
-# /out/
+/out/
 
 # production
 /build
