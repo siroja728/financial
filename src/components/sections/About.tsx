@@ -1,4 +1,8 @@
-import Image from "next/image";
+import Image, { ImageLoader } from "next/image";
+
+const imageLoader: ImageLoader = ({ src }) => {
+  return src;
+};
 
 function About() {
   return (
@@ -8,6 +12,7 @@ function About() {
     >
       <div>
         <Image
+          loader={imageLoader}
           className="rounded-full border-4 border-green-800"
           src="/coach.png"
           width={300}
