@@ -8,4 +8,4 @@ const nextConfig: NextConfig = {
   images: { unoptimized: true },
 };
 
-export default isProd ? {} : nextConfig;
+export default isProd ? nextConfig : {};
