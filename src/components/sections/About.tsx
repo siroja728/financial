@@ -1,11 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import type { ImageLoader } from "next/image";
 
-const imgLoader: ImageLoader = ({ src }) => {
-  return src;
-};
+import { getAssetPath } from "@/lib/getAssetsPath";
 
 function About() {
   return (
@@ -15,9 +12,8 @@ function About() {
     >
       <div>
         <Image
-          loader={imgLoader}
           className="rounded-full border-4 border-green-800"
-          src="/coach.png"
+          src={getAssetPath("/coach.png")}
           width={300}
           height={300}
           alt="Financial Coach"
