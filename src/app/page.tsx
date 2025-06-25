@@ -6,13 +6,18 @@ import Reviews from "@/components/sections/Reviews";
 import Footer from "@/components/sections/Footer";
 import ContactUs from "@/components/sections/ContactUs";
 
-export default function Home() {
+import { getTariffs } from "@/lib/firebase";
+
+export default async function Home() {
+  const tariffs = await getTariffs();
+  const sortedTariffs = tariffs.sort((a, b) => a.order - b.order);
+
   return (
     <>
       <Header />
       <Hero />
       <About />
-      <Tariffs />
+      <Tariffs tariffs={sortedTariffs} />
       <Reviews />
       <ContactUs />
       <Footer />

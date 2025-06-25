@@ -22,6 +22,7 @@ export async function DELETE() {
   return new Response(null, { status: 200 });
 }
 
+// Get token from cookies to check if user logged in SSR component
 export async function GET() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token");

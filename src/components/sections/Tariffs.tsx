@@ -3,10 +3,15 @@ import { useState } from "react";
 
 import LiqpayPayment from "@/components/LiqpayPayment";
 
-function Tariffs() {
+import Tariff from "@/types/Tariff";
+
+function Tariffs({ tariffs }: { tariffs: Tariff[] }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTariff, setSelectedTariff] = useState("");
   const [showForm, setShowForm] = useState(true);
+  const [expandedTariffs, setExpandedTariffs] = useState<Set<string>>(
+    new Set()
+  );
 
   const handleBuyClick = (tariffName: string) => {
     setSelectedTariff(tariffName);
@@ -19,6 +24,17 @@ function Tariffs() {
     setShowForm(true);
   };
 
+  const toggleExpanded = (tariffId: string) => {
+    const newExpanded = new Set(expandedTariffs);
+
+    if (newExpanded.has(tariffId)) {
+      newExpanded.delete(tariffId);
+    } else {
+      newExpanded.add(tariffId);
+    }
+    setExpandedTariffs(newExpanded);
+  };
+
   return (
     <section
       id="tariffs"
@@ -28,63 +44,48 @@ function Tariffs() {
         Тарифи на послуги
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full">
-        <div className="bg-grey p-6 rounded-lg shadow-md flex flex-col justify-between min-h-[350px]">
-          <h3 className="text-xl font-bold text-green-800 mb-2 text-center">
-            Базовий
-          </h3>
-          <p className="text-gray-700 mb-4 text-2xl font-bold text-center">
-            500 грн/місяць
-          </p>
-          <ul className="list-disc pl-5 text-gray-700">
-            <li>Щомісячні консультації</li>
-            <li>Базове бюджетування</li>
-            <li>Доступ до онлайн ресурсів</li>
-          </ul>
-          <button
-            onClick={() => handleBuyClick("Базовий")}
-            className="mt-4 bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700 transition cursor-pointer"
-          >
-            Купити
-          </button>
-        </div>
-        <div className="bg-green-800 p-6 rounded-lg shadow-md flex flex-col justify-between  min-h-[350px]">
-          <h3 className="text-xl font-bold text-white mb-2 text-center">
-            Стандартний
-          </h3>
-          <p className="text-white mb-4 text-2xl font-bold text-center">
-            1000 грн/місяць
-          </p>
-          <ul className="list-disc pl-5 text-white">
-            <li>Все з Базового тарифу</li>
-            <li>Індивідуальне планування інвестицій</li>
-            <li>Щотижневі звіти про прогрес</li>
-          </ul>
-          <button
-            onClick={() => handleBuyClick("Стандартний")}
-            className="mt-4 bg-white text-green px-4 py-2 rounded cursor-pointer"
-          >
-            Купити
-          </button>
-        </div>
-        <div className="bg-grey p-6 rounded-lg shadow-md flex flex-col justify-between min-h-[350px]">
-          <h3 className="text-xl font-bold text-green-800 mb-2 text-center">
-            Преміум
-          </h3>
-          <p className="text-gray-700 mb-4 text-2xl font-bold text-center">
-            2000 грн/місяць
-          </p>
-          <ul className="list-disc pl-5 text-gray-700">
-            <li>Все з Стандартного тарифу</li>
-            <li>Персоналізоване фінансове планування</li>
-            <li>24/7 підтримка через месенджери</li>
-          </ul>
-          <button
-            onClick={() => handleBuyClick("Преміум")}
-            className="mt-4 bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700 transition cursor-pointer"
-          >
-            Купити
-          </button>
-        </div>
+        {tariffs.map((tariff) => {
+          const isExpanded = expandedTariffs.has(tariff.id);
+
+          return (
+            <div
+              key={tariff.id}
+              className={`bg-grey p-6 rounded-lg shadow-md flex flex-col justify-between min-h-[400px] max-w-[350px] ${
+                isExpanded ? "h-auto" : "h-[400px]"
+              }`}
+            >
+              <div className="flex-1">
+                <h3 className="text-xl font-bold text-green-800 mb-2 text-center">
+                  {tariff.name}
+                </h3>
+                <p className="text-gray-700 mb-4 text-2xl font-bold text-center">
+                  {tariff.price} грн/місяць
+                </p>
+                <div className="flex flex-col">
+                  <div
+                    className={`text-gray-700 ${
+                      isExpanded ? "" : "line-clamp-4 overflow-hidden"
+                    }`}
+                  >
+                    {tariff.description}
+                  </div>
+                  <button
+                    onClick={() => toggleExpanded(tariff.id)}
+                    className="text-green-800 hover:text-green-600 text-sm mt-2 self-start underline"
+                  >
+                    {isExpanded ? "Згорнути" : "Показати більше"}
+                  </button>
+                </div>
+              </div>
+              <button
+                onClick={() => handleBuyClick(tariff.name)}
+                className="mt-4 bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700 transition cursor-pointer flex-shrink-0"
+              >
+                Купити
+              </button>
+            </div>
+          );
+        })}
       </div>
       {/* Modal */}
       {isModalOpen && (
