@@ -28,7 +28,6 @@ export const NotificationProvider = ({
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
-    // Clear notifications after 5 seconds
     const timer = setTimeout(() => {
       setNotifications([]);
     }, 5000);
