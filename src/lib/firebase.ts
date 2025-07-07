@@ -11,6 +11,7 @@ import {
   getDoc,
   doc,
   deleteDoc,
+  orderBy,
 } from "firebase/firestore";
 
 import Tariff from "@/types/Tariff";
@@ -34,7 +35,10 @@ const auth = getAuth(app);
 export { app, db, auth };
 
 export async function getPayments(): Promise<Payment[]> {
-  const snapshot = await getDocs(collection(db, "payments"));
+  const paymentsRef = collection(db, "payments");
+  const q = query(paymentsRef, orderBy("payment_date", "desc"));
+
+  const snapshot = await getDocs(q);
 
   return snapshot.docs.map((doc) => ({
     id: doc.id,
