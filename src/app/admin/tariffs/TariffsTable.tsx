@@ -173,7 +173,6 @@ function TariffsTable({ tariffs }: { tariffs: Tariff[] }) {
         </tbody>
       </table>
 
-      {/* Edit/Create Modal */}
       {isModalOpen && (
         <div
           className="fixed inset-0 bg-black/70 backdrop-blur flex items-center justify-center z-50"
@@ -249,7 +248,6 @@ function TariffsTable({ tariffs }: { tariffs: Tariff[] }) {
         </div>
       )}
 
-      {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
         <div
           className="fixed inset-0 bg-black/70 backdrop-blur flex items-center justify-center z-50"
