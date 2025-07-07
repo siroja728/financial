@@ -7,21 +7,19 @@ import Tariff from "@/types/Tariff";
 
 function Tariffs({ tariffs }: { tariffs: Tariff[] }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTariff, setSelectedTariff] = useState("");
-  const [showForm, setShowForm] = useState(true);
+  const [selectedTariff, setSelectedTariff] = useState<Tariff | null>(null);
   const [expandedTariffs, setExpandedTariffs] = useState<Set<string>>(
     new Set()
   );
 
-  const handleBuyClick = (tariffName: string) => {
-    setSelectedTariff(tariffName);
+  const handleBuyClick = (selectedTariff: Tariff) => {
+    setSelectedTariff(selectedTariff);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedTariff("");
-    setShowForm(true);
+    setSelectedTariff(null);
   };
 
   const toggleExpanded = (tariffId: string) => {
@@ -78,7 +76,7 @@ function Tariffs({ tariffs }: { tariffs: Tariff[] }) {
                 </div>
               </div>
               <button
-                onClick={() => handleBuyClick(tariff.name)}
+                onClick={() => handleBuyClick(tariff)}
                 className="mt-4 bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700 transition cursor-pointer flex-shrink-0"
               >
                 Купити
@@ -118,46 +116,23 @@ function Tariffs({ tariffs }: { tariffs: Tariff[] }) {
               </svg>
             </button>
             <h3 className="text-xl font-bold text-green-800 mb-4 text-center">
-              Купівля тарифу: {selectedTariff}
+              Купівля тарифу: {selectedTariff?.name}
             </h3>
             <p className="text-gray-700 mb-4">
               Ви обрали тариф&nbsp;
-              <span className="font-bold">{selectedTariff}</span>. Будь ласка,
-              заповніть форму та здійсніть оплату через LiqPay.
+              <span className="font-bold">{selectedTariff?.name}</span>. Будь
+              ласка, заповніть форму та здійсніть оплату. Всю додаткову
+              інформацію буде надіслано на вашу електронну пошту після успішної
+              оплати.
             </p>
             <p className="text-gray-700 mb-4">
               Ми не передаємо ваші дані третім особам і використовуємо їх лише
               для обробки платежів та надання послуг.
             </p>
-            {showForm ? (
-              <form className="flex flex-col gap-4">
-                <label className="text-gray-700">
-                  Ваше ім&apos;я:
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-800"
-                    required
-                  />
-                </label>
-                <label className="text-gray-700">
-                  Email:
-                  <input
-                    type="email"
-                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-800"
-                    required
-                  />
-                </label>
-                <label className="text-gray-700">
-                  Телефон:
-                  <input
-                    type="tel"
-                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-800"
-                    required
-                  />
-                </label>
-              </form>
-            ) : null}
-            <LiqpayPayment onContinue={() => setShowForm(false)} />
+            <LiqpayPayment
+              tariff={selectedTariff}
+              onFormSubmit={() => setIsModalOpen(false)}
+            />
           </div>
         </div>
       )}

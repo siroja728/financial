@@ -1,5 +1,8 @@
 export default interface Payment {
   id: string;
+  order_id: string;
+  transaction_id: string;
+  liqpay_order_id: string;
   name: string;
   email: string;
   description: string;

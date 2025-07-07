@@ -7,6 +7,10 @@ import {
   where,
   query,
   getFirestore,
+  updateDoc,
+  getDoc,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 
 import Tariff from "@/types/Tariff";
@@ -38,6 +42,61 @@ export async function getPayments(): Promise<Payment[]> {
   })) as Payment[];
 }
 
+export async function createPayment({
+  payment,
+}: {
+  payment: Omit<Payment, "id">;
+}): Promise<Payment> {
+  try {
+    const docRef = await addDoc(collection(db, "payments"), payment);
+    return { id: docRef.id, ...payment };
+  } catch (error) {
+    console.error("Error creating payment: ", error);
+    throw new Error("Failed to create payment");
+  }
+}
+
+export async function updatePayment({
+  id,
+  payment,
+}: {
+  id: string;
+  payment: Partial<Omit<Payment, "id">>;
+}): Promise<Payment> {
+  try {
+    const docRef = doc(db, "payments", id);
+    await updateDoc(docRef, payment);
+    const updatedDoc = await getDoc(docRef);
+    return { id: updatedDoc.id, ...updatedDoc.data() } as Payment;
+  } catch (error) {
+    console.error("Error updating payment: ", error);
+    throw new Error("Failed to update payment");
+  }
+}
+
+export async function getPaymentByOrderId(
+  orderId: string
+): Promise<Payment | null> {
+  try {
+    const q = query(
+      collection(db, "payments"),
+      where("order_id", "==", orderId)
+    );
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      return null;
+    }
+
+    const doc = snapshot.docs[0];
+
+    return { id: doc.id, ...doc.data() } as Payment;
+  } catch (error) {
+    console.error("Error getting payment by order ID: ", error);
+    throw new Error("Failed to get payment by order ID");
+  }
+}
+
 export async function getTariffs(): Promise<Tariff[]> {
   try {
     const snapshot = await getDocs(collection(db, "tariffs"));
@@ -64,6 +123,50 @@ export async function createTariff({
   } catch (error) {
     console.error("Error creating tariff: ", error);
     throw new Error("Failed to create tariff");
+  }
+}
+
+export async function updateTariff({
+  id,
+  tariff,
+}: {
+  id: string;
+  tariff: Partial<Omit<Tariff, "id">>;
+}): Promise<Tariff> {
+  try {
+    const docRef = doc(db, "tariffs", id);
+    await updateDoc(docRef, tariff);
+    const updatedDoc = await getDoc(docRef);
+    return { id: updatedDoc.id, ...updatedDoc.data() } as Tariff;
+  } catch (error) {
+    console.error("Error updating tariff: ", error);
+    throw new Error("Failed to update tariff");
+  }
+}
+
+export async function getTariffById(id: string): Promise<Tariff | null> {
+  try {
+    const docRef = doc(db, "tariffs", id);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      return null;
+    }
+
+    return { id: docSnap.id, ...docSnap.data() } as Tariff;
+  } catch (error) {
+    console.error("Error getting tariff by ID: ", error);
+    throw new Error("Failed to get tariff by ID");
+  }
+}
+
+export async function deleteTariff(id: string): Promise<void> {
+  try {
+    const docRef = doc(db, "tariffs", id);
+    await deleteDoc(docRef);
+  } catch (error) {
+    console.error("Error deleting tariff: ", error);
+    throw new Error("Failed to delete tariff");
   }
 }
 

@@ -18,6 +18,13 @@ function AdminPage() {
           <h2 className="text-xl font-semibold mb-2">Тарифи</h2>
           <p className="text-gray-600">Створюйте та редагуйте тарифні плани</p>
         </Link>
+        <Link
+          href="/admin/settings"
+          className="p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+        >
+          <h2 className="text-xl font-semibold mb-2">Налаштування</h2>
+          <p className="text-gray-600">Загальні налаштування системи</p>
+        </Link>
       </div>
     </div>
   );
