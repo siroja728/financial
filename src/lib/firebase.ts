@@ -212,11 +212,14 @@ export async function createReview({
 
 // TODO: need to refactor this function to not use `any` type
 // This function retrieves settings from the Firestore database.
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function getContactInfo(): Promise<Record<string, any>> {
+export async function getSettings({
+  setting_name,
+}: {
+  setting_name: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}): Promise<Record<string, any>> {
   try {
-    const docRef = doc(db, "settings", "contact_info");
+    const docRef = doc(db, "settings", setting_name);
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
@@ -228,5 +231,22 @@ export async function getContactInfo(): Promise<Record<string, any>> {
   } catch (error) {
     console.error("Error getting settings: ", error);
     throw new Error("Failed to get settings");
+  }
+}
+
+export async function updateSettings({
+  setting_name,
+  settings,
+}: {
+  setting_name: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  settings: Record<string, any>;
+}): Promise<void> {
+  try {
+    const docRef = doc(db, "settings", setting_name);
+    await updateDoc(docRef, settings);
+  } catch (error) {
+    console.error("Error updating settings: ", error);
+    throw new Error("Failed to update settings");
   }
 }
