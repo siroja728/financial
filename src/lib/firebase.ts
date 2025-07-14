@@ -34,6 +34,7 @@ const auth = getAuth(app);
 
 export { app, db, auth };
 
+// Firebase Firestore functions for managing payments
 export async function getPayments(): Promise<Payment[]> {
   const paymentsRef = collection(db, "payments");
   const q = query(paymentsRef, orderBy("payment_date", "desc"));
@@ -101,6 +102,7 @@ export async function getPaymentByOrderId(
   }
 }
 
+// Firebase Firestore functions for managing tariffs
 export async function getTariffs(): Promise<Tariff[]> {
   try {
     const snapshot = await getDocs(collection(db, "tariffs"));
@@ -174,6 +176,7 @@ export async function deleteTariff(id: string): Promise<void> {
   }
 }
 
+// Firebase Firestore functions for managing reviews
 export async function getReviews(): Promise<Review[]> {
   try {
     const q = query(
@@ -204,5 +207,26 @@ export async function createReview({
   } catch (error) {
     console.error("Error creating review: ", error);
     throw new Error("Failed to create review");
+  }
+}
+
+// TODO: need to refactor this function to not use `any` type
+// This function retrieves settings from the Firestore database.
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function getContactInfo(): Promise<Record<string, any>> {
+  try {
+    const docRef = doc(db, "settings", "contact_info");
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      throw new Error("Settings document does not exist");
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return docSnap.data() as Record<string, any>;
+  } catch (error) {
+    console.error("Error getting settings: ", error);
+    throw new Error("Failed to get settings");
   }
 }
