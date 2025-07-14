@@ -8,7 +8,7 @@ async function TariffsPage() {
   console.log("Sorted Tariffs:", tariffs);
 
   return (
-    <div className="p-4">
+    <div className="p-4 overflow-hidden">
       <h1 className="text-2xl font-bold mb-4">Тарифи</h1>
       <div className="w-full">
         <div className="bg-white rounded-lg shadow-md overflow-hidden">

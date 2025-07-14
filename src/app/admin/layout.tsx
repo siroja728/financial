@@ -15,7 +15,7 @@ const Content = async ({ children }: { children: React.ReactNode }) => {
 
       <div className="flex gap-2">
         {authenticated ? (
-          <aside className="md:w-[200px] bg-gray-100 min-h-screen p-2">
+          <aside className="md:w-[200px] bg-gray-100 p-2 fixed top-15 left-0 z-50 h-full">
             <nav>
               <ul className="space-y-2">
                 <li>
@@ -91,7 +91,7 @@ const Content = async ({ children }: { children: React.ReactNode }) => {
             </nav>
           </aside>
         ) : null}
-        <div className="flex-1 p-2">
+        <div className="p-2 ml-[56px] md:ml-[200px] overflow-hidden">
           <PageWrapper>{children}</PageWrapper>
         </div>
       </div>

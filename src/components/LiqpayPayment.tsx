@@ -84,6 +84,7 @@ function LiqpayPayment({
         liqpay_order_id: "",
         name: data.first_name + " " + data.last_name,
         email: data.email,
+        phone: data.phone,
         description: `Оплата тарифу "${tariff?.name}" від "${data.first_name} ${data.last_name}
         `,
         amount: tariff?.price || 0,
@@ -134,7 +135,7 @@ function LiqpayPayment({
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-800"
               name="phone"
               pattern="[0-9]{10}"
-              placeholder="Наприклад: 380501234567"
+              placeholder="Наприклад: 0501234567"
               required
             />
           </label>

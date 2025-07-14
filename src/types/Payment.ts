@@ -9,4 +9,5 @@ export default interface Payment {
   amount: number;
   status: string;
   payment_date: string;
+  phone: string;
 }

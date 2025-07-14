@@ -5,15 +5,21 @@ async function PaymentsPage() {
   console.log("Payments:", payments);
 
   return (
-    <div className="p-4">
+    <div className="p-4 overflow-hidden">
       <h1 className="text-2xl font-bold mb-4">Платежі</h1>
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <div className="overflow-x-auto overflow-y-auto">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div className="overflow-x-auto">
           <table className="w-full min-w-full">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-200">
                 <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Прізвище та імя
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Email покупця
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Телефон покупця
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Ідентифікатор замовлення
@@ -33,9 +39,6 @@ async function PaymentsPage() {
                 <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Опис
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Email покупця
-                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -46,6 +49,12 @@ async function PaymentsPage() {
                 >
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {payment.name}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {payment.email}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {payment.phone}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {payment.order_id}
@@ -59,8 +68,8 @@ async function PaymentsPage() {
                         payment.status === "success"
                           ? "bg-green-100 text-green-800"
                           : payment.status === "pending"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : "bg-red-100 text-red-800"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-red-100 text-red-800"
                       }`}
                     >
                       {payment.status}
@@ -74,9 +83,6 @@ async function PaymentsPage() {
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">
                     {payment.description}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.email}
                   </td>
                 </tr>
               ))}
