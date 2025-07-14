@@ -1,8 +1,8 @@
 import { getPayments } from "@/lib/firebase";
 
+// TODO: Add pagination here
 async function PaymentsPage() {
   const payments = await getPayments();
-  console.log("Payments:", payments);
 
   return (
     <div className="p-4 overflow-hidden">
