@@ -51,10 +51,20 @@ async function PaymentsPage() {
                     {payment.name}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.email}
+                    <a
+                      href={`mailto:${payment.email}`}
+                      className="text-blue-600 hover:underline"
+                    >
+                      {payment.email}
+                    </a>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.phone}
+                    <a
+                      href={`tel:${payment.phone}`}
+                      className="text-blue-600 hover:underline"
+                    >
+                      {payment.phone}
+                    </a>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {payment.order_id}
