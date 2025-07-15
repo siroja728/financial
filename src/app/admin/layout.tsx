@@ -91,7 +91,7 @@ const Content = async ({ children }: { children: React.ReactNode }) => {
             </nav>
           </aside>
         ) : null}
-        <div className="p-2 ml-[56px] md:ml-[200px] overflow-hidden">
+        <div className="p-2 ml-[56px] md:ml-[200px] overflow-hidden w-full">
           <PageWrapper>{children}</PageWrapper>
         </div>
       </div>
