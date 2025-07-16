@@ -1,4 +1,4 @@
-import { getPayments } from "@/lib/firebase";
+import { getPayments } from "@/lib/api-handlers/payments";
 
 // TODO: Add pagination here
 async function PaymentsPage() {

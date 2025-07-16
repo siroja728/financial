@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-import { createReview, getReviews } from "@/lib/firebase";
+import { createReview, getReviews } from "@/lib/api-handlers/reviews";
 
 import Review from "@/types/Review";
 

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { createPayment } from "@/lib/firebase";
+import { createPayment } from "@/lib/api-handlers/payments";
 
 import Tariff from "@/types/Tariff";
 

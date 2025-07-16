@@ -1,5 +1,8 @@
 import crypto from "crypto";
-import { updatePayment, getPaymentByOrderId } from "@/lib/firebase";
+import {
+  updatePayment,
+  getPaymentByOrderId,
+} from "@/lib/api-handlers/payments";
 
 function createSignature(data: string, privateKey: string) {
   const str = privateKey + data + privateKey;

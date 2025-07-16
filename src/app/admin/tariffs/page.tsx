@@ -1,11 +1,10 @@
-import { getTariffs } from "@/lib/firebase";
+import { getTariffs } from "@/lib/api-handlers/tariffs";
 
 import TariffsTable from "@/app/admin/tariffs/TariffsTable";
 
 async function TariffsPage() {
   const tariffs = await getTariffs();
   const sortedTariffs = tariffs.sort((a, b) => a.order - b.order);
-  console.log("Sorted Tariffs:", tariffs);
 
   return (
     <div className="p-4 overflow-hidden">

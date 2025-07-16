@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 
-import { getSettings } from "@/lib/firebase";
+import { getSettings } from "@/lib/api-handlers/settings";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 

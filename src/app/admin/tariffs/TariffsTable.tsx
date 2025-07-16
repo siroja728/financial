@@ -3,7 +3,11 @@ import { useState } from "react";
 
 import Tariff from "@/types/Tariff";
 
-import { createTariff, updateTariff, deleteTariff } from "@/lib/firebase";
+import {
+  createTariff,
+  updateTariff,
+  deleteTariff,
+} from "@/lib/api-handlers/tariffs";
 
 const initialFormData = {
   id: "",
