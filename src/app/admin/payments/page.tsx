@@ -1,5 +1,10 @@
 import { getPayments } from "@/lib/api-handlers/payments";
 
+export const metadata = {
+  title: "Адмін панель - Платежі",
+  description: "Керування системними платежами",
+};
+
 // TODO: Add pagination here
 async function PaymentsPage() {
   const payments = await getPayments();

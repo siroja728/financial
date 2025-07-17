@@ -1,5 +1,10 @@
 import Link from "next/link";
 
+export const metadata = {
+  title: "Адмін панель",
+  description: "Керування системою",
+};
+
 function AdminPage() {
   return (
     <div className="p-6">

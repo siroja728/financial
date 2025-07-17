@@ -1,63 +1,36 @@
-"use client";
+import Tabs from "@/app/admin/settings/components/Tabs";
+import SystemSettings from "@/app/admin/settings/components/SystemSettings";
+import HomePageSettings from "@/app/admin/settings/components/HomePageSettings";
 
-import { useState } from "react";
+import { getSettings } from "@/lib/api-handlers/settings";
 
-function SettingsPage() {
-  const [activeTab, setActiveTab] = useState<"system" | "homepage">("system");
+export const metadata = {
+  title: "Адмін панель - Налаштування",
+  description: "Керування системними налаштуваннями",
+};
+
+async function SettingsPage() {
+  const adminSettings = await getSettings({
+    setting_name: "admin",
+  });
 
   return (
     <div className="p-4 overflow-hidden">
       <h1 className="text-2xl font-bold mb-4">Налаштування</h1>
-
-      {/* Tab Navigation */}
-      <div className="flex flex-col sm:flex-row border-b border-gray-200 mb-6">
-        <button
-          onClick={() => setActiveTab("system")}
-          className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors cursor-pointer ${
-            activeTab === "system"
-              ? "border-blue-500 text-blue-600"
-              : "border-transparent text-gray-500 hover:text-gray-700"
-          }`}
-        >
-          Системні налаштування
-        </button>
-        <button
-          onClick={() => setActiveTab("homepage")}
-          className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors cursor-pointer ${
-            activeTab === "homepage"
-              ? "border-blue-500 text-blue-600"
-              : "border-transparent text-gray-500 hover:text-gray-700"
-          }`}
-        >
-          Налаштування головної сторінки
-        </button>
-      </div>
-
-      {/* Tab Content */}
-      <div className="min-h-[400px]">
-        {activeTab === "system" && (
-          <div>
-            <h2 className="text-xl font-semibold mb-4">
-              Системні налаштування
-            </h2>
-            <p className="text-gray-600">
-              Тут будуть розміщені системні налаштування додатку
-            </p>
-          </div>
-        )}
-
-        {activeTab === "homepage" && (
-          <div>
-            <h2 className="text-xl font-semibold mb-4">
-              Налаштування головної сторінки
-            </h2>
-            <p className="text-gray-600">
-              Тут будуть розміщені налаштування текстів та контенту головної
-              сторінки
-            </p>
-          </div>
-        )}
-      </div>
+      <Tabs
+        items={[
+          {
+            id: "system",
+            title: "Системні налаштування",
+            content: <SystemSettings settings={adminSettings} />,
+          },
+          {
+            id: "homepage",
+            title: "Налаштування головної сторінки",
+            content: <HomePageSettings />,
+          },
+        ]}
+      />
     </div>
   );
 }

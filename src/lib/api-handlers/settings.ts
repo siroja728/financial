@@ -24,6 +24,25 @@ export async function getSettings({
   }
 }
 
+export async function getAllSettings(): Promise<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Record<string, Record<string, any>>
+> {
+  try {
+    const settingsRef = doc(db, "settings");
+    const snapshot = await getDoc(settingsRef);
+
+    if (!snapshot.exists()) {
+      throw new Error("Settings document does not exist");
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return snapshot.data() as Record<string, Record<string, any>>;
+  } catch (error) {
+    console.error("Error getting all settings: ", error);
+    throw new Error("Failed to get all settings");
+  }
+}
+
 // TODO: need to refactor this function to not use `any` type
 export async function updateSettings({
   setting_name,

@@ -2,6 +2,11 @@ import { getTariffs } from "@/lib/api-handlers/tariffs";
 
 import TariffsTable from "@/app/admin/tariffs/TariffsTable";
 
+export const metadata = {
+  title: "Адмін панель - Тарифи",
+  description: "Керування системними тарифами",
+};
+
 async function TariffsPage() {
   const tariffs = await getTariffs();
   const sortedTariffs = tariffs.sort((a, b) => a.order - b.order);
