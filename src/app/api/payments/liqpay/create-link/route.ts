@@ -8,16 +8,19 @@ const RESULT_URL = process.env.LIQPAY_RESULT_URL!;
 export async function POST(req: Request) {
   const body = await req.json();
 
-  const { amount, description, order_id } = body;
+  const { amount, description, order_id, name, phone, email } = body;
 
   const params = {
+    name,
+    phone,
+    email,
+    amount,
+    description,
+    order_id,
     public_key: PUBLIC_KEY,
     version: "3",
     action: "pay",
-    amount,
     currency: "UAH",
-    description,
-    order_id,
     language: "uk",
     result_url: RESULT_URL,
     server_url: SERVER_URL,

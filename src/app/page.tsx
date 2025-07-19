@@ -6,7 +6,12 @@ import Reviews from "@/components/sections/Reviews";
 import Footer from "@/components/sections/Footer";
 import ContactUs from "@/components/sections/ContactUs";
 
-import { getTariffs } from "@/lib/firebase";
+import { getTariffs } from "@/lib/api-handlers/tariffs";
+
+export const metadata = {
+  title: "VR-invest - Financial Courses",
+  description: "Learn finance with our comprehensive courses",
+};
 
 export default async function Home() {
   const tariffs = await getTariffs();

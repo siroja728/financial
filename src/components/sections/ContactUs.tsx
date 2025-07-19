@@ -1,4 +1,38 @@
+"use client";
+
 function ContactUs() {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = {
+      subject: formData.get("name") as string,
+      html: formData.get("message") as string,
+      sender_email: formData.get("email") as string,
+    };
+
+    try {
+      const response = await fetch("/api/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      alert("Ваше повідомлення надіслано. Я відповім протягом 24 годин.");
+      form.reset();
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("Сталася помилка при надсиланні повідомлення. Спробуйте ще раз.");
+    }
+  };
+
   return (
     <section className="flex flex-col gap-4 items-center justify-center p-10 min-h-100 bg-green">
       <h2 className="text-3xl font-bold text-white mb-10">Маєш запитання?</h2>
@@ -70,11 +104,7 @@ function ContactUs() {
           <p className="text-gray-700 mb-4">
             Я відповім на всі запитання протягом 24 годин.
           </p>
-          <form
-            action="https://formspree.io/f/your-form-id"
-            method="POST"
-            className="space-y-4"
-          >
+          <form className="space-y-4" onSubmit={handleFormSubmit}>
             <input
               type="text"
               name="name"

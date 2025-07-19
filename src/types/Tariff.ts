@@ -5,6 +5,6 @@ export default interface Tariff {
   description: string;
   price: number;
   discount: number;
-  discount_type: ["percent" | "fixed" | "none"];
-  duration: ["week" | "month" | "year"];
+  discount_type: "percent" | "fixed" | "none";
+  duration: "week" | "month" | "year";
 }
