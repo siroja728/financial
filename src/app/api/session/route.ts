@@ -1,5 +1,7 @@
 import { cookies } from "next/headers";
 
+import { adminAuth } from "@/lib/adminAuth";
+
 // Set token in cookies on successful login to check if user logged in SSR component
 export async function POST(request: Request) {
   const { token } = await request.json();
@@ -31,8 +33,15 @@ export async function GET() {
     return new Response(null, { status: 401 });
   }
 
-  return new Response(JSON.stringify({ token: token.value }), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+  try {
+    await adminAuth.verifyIdToken(token?.value || "");
+
+    return new Response(JSON.stringify({ token: token.value }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Error verifying ID token: ", error);
+    return new Response(null, { status: 401 });
+  }
 }

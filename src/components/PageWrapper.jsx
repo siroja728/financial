@@ -1,34 +1,26 @@
 "use client";
+import Link from "next/link";
 
 import { useAuth } from "@/context/AuthProvider";
 
 function PageWrapper({ children }) {
-  const { user, loading, authenticated } = useAuth();
+  const { loading, authenticated } = useAuth();
 
   if (loading) return <p>Loading...</p>;
 
-  if (!user) {
+  if (!authenticated) {
     return (
-      <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-        <p className="text-center text-gray-700 mt-10">
-          Ви повинні авторизуватися щоб побачити вміст сторінки. Будь
-          ласка&nbsp;
-          <a
-            href="/login"
-            className="text-green-800 hover:text-green-600 underline"
-          >
-            увідійти в систему
-          </a>
-          &nbsp; щоб продовжити.
-        </p>
-        <p>
-          Або відвідайте&nbsp;
-          <a href="/" className="text-green-800 hover:text-green-600 underline">
-            головну сторінку
-          </a>
-          &nbsp; щоб переглянути загальнодоступний вміст.
-        </p>
-      </main>
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Доступ заборонено</h1>
+          <p className="mb-4">
+            Ви повинні увійти в систему, щоб отримати доступ до цієї сторінки.
+          </p>
+          <Link href="/login" className="text-blue-500 hover:underline">
+            Увійти
+          </Link>
+        </div>
+      </div>
     );
   }
 

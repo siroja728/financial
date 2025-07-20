@@ -1,7 +1,20 @@
 import { cookies } from "next/headers";
 
-// TODO: Need to verify token with firebase admin SDK
+import { adminAuth } from "@/lib/adminAuth";
+
 export async function isAuthenticated() {
-  const firebaseToken = (await cookies()).get("token")?.value || "";
-  return Boolean(firebaseToken);
+  try {
+    const firebaseToken = (await cookies()).get("token")?.value || "";
+
+    if (!firebaseToken) {
+      return false;
+    }
+
+    const user = await adminAuth.verifyIdToken(firebaseToken);
+
+    return Boolean(user);
+  } catch (e) {
+    console.error("Authentication error: ", e);
+    return false;
+  }
 }

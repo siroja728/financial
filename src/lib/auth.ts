@@ -48,5 +48,5 @@ export async function getToken(): Promise<string | null> {
 export async function isAuthenticated(): Promise<boolean> {
   const token = await getToken();
 
-  return token !== null;
+  return Boolean(token);
 }
