@@ -1,4 +1,3 @@
-// app/admin/payments/page.tsx
 import { getPaymentsPaginated } from "@/lib/api-handlers/adminPayments";
 import Link from "next/link";
 
