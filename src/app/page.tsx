@@ -7,6 +7,7 @@ import Footer from "@/components/sections/Footer";
 import ContactUs from "@/components/sections/ContactUs";
 
 import { getTariffs } from "@/lib/api-handlers/tariffs";
+import { getAllSettings } from "@/lib/api-handlers/settings";
 
 export const metadata = {
   title: "VR-invest - Financial Courses",
@@ -16,15 +17,19 @@ export const metadata = {
 export default async function Home() {
   const tariffs = await getTariffs();
   const sortedTariffs = tariffs.sort((a, b) => a.order - b.order);
+  const settings = await getAllSettings();
 
   return (
     <>
       <Header />
-      <Hero />
-      <About />
+      <Hero settings={settings.hero_block} />
+      <About about={settings.personal_info} />
       <Tariffs tariffs={sortedTariffs} />
       <Reviews />
-      <ContactUs />
+      <ContactUs
+        contactInfo={settings.contact_info}
+        socialLinks={settings.social_links}
+      />
       <Footer />
     </>
   );

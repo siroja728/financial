@@ -3,8 +3,9 @@
 import Image from "next/image";
 
 import { getAssetPath } from "@/lib/getAssetsPath";
+import { PersonalInfo } from "@/types/Settings";
 
-function About() {
+function About({ about }: { about: PersonalInfo }) {
   return (
     <section
       id="about"
@@ -21,18 +22,9 @@ function About() {
       </div>
       <div className="flex flex-col gap-4 max-w-2xl">
         <h2 className="font-bold text-4xl text-green-800 text-center lg:text-left">
-          Про Вікторія Рибарук
+          {`Про ${about.first_name} ${about.last_name}`}
         </h2>
-        <p className="text-center lg:text-left">
-          Маючи понад 10 років досвіду у фінансовому плануванні та управлінні
-          активами, я допомагаю окремим особам та сім&apos;ям контролювати свої
-          фінанси та будувати безпечне майбутнє. Я маю сертифікати з фінансового
-          планування (CFP) і допоміг понад 500 клієнтам досягти своїх фінансових
-          цілей за допомогою персоналізованого коучингу та стратегічного
-          планування. Мій підхід поєднує практичні стратегії бюджетування з
-          довгостроковим інвестиційним плануванням для створення комплексної
-          фінансової дорожньої карти, адаптованої до вашої унікальної ситуації.
-        </p>
+        <p className="text-center lg:text-left">{about.about_me}</p>
       </div>
     </section>
   );

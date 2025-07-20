@@ -2,7 +2,7 @@ import Tabs from "@/app/admin/settings/components/Tabs";
 import SystemSettings from "@/app/admin/settings/components/SystemSettings";
 import HomePageSettings from "@/app/admin/settings/components/HomePageSettings";
 
-import { getSettings } from "@/lib/api-handlers/settings";
+import { getAllSettings } from "@/lib/api-handlers/settings";
 
 export const metadata = {
   title: "Адмін панель - Налаштування",
@@ -10,9 +10,7 @@ export const metadata = {
 };
 
 async function SettingsPage() {
-  const adminSettings = await getSettings({
-    setting_name: "admin",
-  });
+  const settings = await getAllSettings();
 
   return (
     <div className="p-4 overflow-hidden">
@@ -22,12 +20,12 @@ async function SettingsPage() {
           {
             id: "system",
             title: "Системні налаштування",
-            content: <SystemSettings settings={adminSettings} />,
+            content: <SystemSettings settings={settings?.admin} />,
           },
           {
             id: "homepage",
             title: "Налаштування головної сторінки",
-            content: <HomePageSettings />,
+            content: <HomePageSettings settings={settings} />,
           },
         ]}
       />

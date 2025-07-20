@@ -21,10 +21,11 @@ export async function POST(request: Request) {
 
   try {
     resend.emails.send({
-      from: `Financial Courses <onboarding@resend.dev>`,
+      from: "noreply@vr-invest.ck.ua",
       to: adminEmail || email,
-      subject,
-      html: `Email from: ${sender_email}<br><br>${html}`,
+      subject: `Форма зворотного зв'язку від ${subject || "Анонім"} (${sender_email || "без email"})`,
+      html: `Форма зворотнього зв'язку:<br><br>${html}<br><br>Відправник: ${sender_email || "Невідомий"}`,
+      replyTo: sender_email || undefined,
     });
 
     return NextResponse.json({ success: true }, { status: 200 });

@@ -1,10 +1,12 @@
 "use client";
 
 import { updateSettings } from "@/lib/api-handlers/settings";
-function SystemSettings({ settings }: { settings: { email?: string } | null }) {
+import { AdminSettings } from "@/types/Settings";
+
+function SystemSettings({ settings }: { settings: AdminSettings | null }) {
   const email = settings?.email;
 
-  const handleUpdateAdminSettings = async (settings: { email: string }) => {
+  const handleUpdateAdminSettings = async (settings: AdminSettings) => {
     try {
       await updateSettings({
         setting_name: "admin",
