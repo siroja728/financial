@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    resend.emails.send({
+    await resend.emails.send({
       from: "noreply@vr-invest.ck.ua",
       to: adminEmail || email,
       subject: `Форма зворотного зв'язку від ${subject || "Анонім"} (${sender_email || "без email"})`,

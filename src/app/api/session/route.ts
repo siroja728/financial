@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-import { adminAuth } from "@/lib/adminAuth";
+import { adminAuth } from "@/lib/adminFirebase";
 
 // Set token in cookies on successful login to check if user logged in SSR component
 export async function POST(request: Request) {

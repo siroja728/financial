@@ -1,8 +1,11 @@
 import crypto from "crypto";
+import { Resend } from "resend";
 import {
   updatePayment,
   getPaymentByOrderId,
 } from "@/lib/api-handlers/payments";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 function createSignature(data: string, privateKey: string) {
   const str = privateKey + data + privateKey;
@@ -26,13 +29,7 @@ export async function POST(req: Request) {
   }
 
   const decodedData = JSON.parse(Buffer.from(data, "base64").toString("utf-8"));
-
-  // ✅ handle payment success here
-  console.log("LiqPay webhook:", decodedData);
-
   const payment = await getPaymentByOrderId(decodedData.order_id);
-
-  console.log("Payment found:", payment);
 
   if (payment) {
     const updatedPayment = {
@@ -44,6 +41,16 @@ export async function POST(req: Request) {
     await updatePayment({
       id: payment.id,
       payment: updatedPayment,
+    });
+    await resend.emails.send({
+      from: "noreply@vr-invest.ck.ua",
+      to: payment.email,
+      subject: `Ваш платіж з ID ${decodedData.transaction_id} оновлено`,
+      html: `Ваш платіж з ID ${decodedData.transaction_id} має статус: ${decodedData.status}.<br>
+             Order ID: ${decodedData.order_id}.<br>
+             Дата платежу: ${new Date().toLocaleString()}.<br>
+             Сума: ${decodedData.amount} UAH.<br>
+             Опис: ${decodedData.description || "Немає опису"}.`,
     });
   }
 

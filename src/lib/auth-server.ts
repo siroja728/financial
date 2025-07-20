@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-import { adminAuth } from "@/lib/adminAuth";
+import { adminAuth } from "@/lib/adminFirebase";
 
 export async function isAuthenticated() {
   try {

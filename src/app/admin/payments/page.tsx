@@ -1,112 +1,130 @@
-import { getPayments } from "@/lib/api-handlers/payments";
+// app/admin/payments/page.tsx
+import { getPaymentsPaginated } from "@/lib/api-handlers/adminPayments";
+import Link from "next/link";
 
-export const metadata = {
-  title: "Адмін панель - Платежі",
-  description: "Керування системними платежами",
-};
+interface Props {
+  searchParams: {
+    page?: string;
+    search?: string;
+  };
+}
 
-// TODO: Add pagination here
-async function PaymentsPage() {
-  const payments = await getPayments();
+const PAGE_SIZE = 10;
+
+export default async function PaymentsPage({ searchParams }: Props) {
+  const page = parseInt(searchParams.page || "1", 10);
+  const search = searchParams.search || "";
+  const { payments, totalCount } = await getPaymentsPaginated({
+    page,
+    search,
+    pageSize: PAGE_SIZE,
+  });
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
   return (
-    <div className="p-4 overflow-hidden">
+    <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Платежі</h1>
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-full">
-            <thead>
-              <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Прізвище та імя
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Email покупця
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Телефон покупця
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Ідентифікатор замовлення
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Ідентифікатор транзакції
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Статус платежу
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Дата платежу
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Сума
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Опис
-                </th>
+
+      <form className="mb-4 flex gap-2" method="GET">
+        <input
+          type="text"
+          name="search"
+          placeholder="Пошук..."
+          defaultValue={search}
+          className="border p-2 rounded w-64"
+        />
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200 cursor-pointer"
+        >
+          Шукати
+        </button>
+      </form>
+
+      {/* Таблиця */}
+      <div className="overflow-x-auto bg-white rounded shadow border">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-gray-100 text-xs text-gray-600 uppercase">
+              <th className="px-4 py-2 text-left">Ім’я</th>
+              <th className="px-4 py-2 text-left">Email</th>
+              <th className="px-4 py-2 text-left">Телефон</th>
+              <th className="px-4 py-2 text-left">Order ID</th>
+              <th className="px-4 py-2 text-left">Transaction</th>
+              <th className="px-4 py-2 text-left">Статус</th>
+              <th className="px-4 py-2 text-left">Дата</th>
+              <th className="px-4 py-2 text-left">Сума</th>
+              <th className="px-4 py-2 text-left">Опис</th>
+            </tr>
+          </thead>
+          <tbody>
+            {payments.map((p) => (
+              <tr key={p.id} className="border-t hover:bg-gray-50">
+                <td className="px-4 py-2">{p.name}</td>
+                <td className="px-4 py-2">
+                  <a
+                    href={`mailto:${p.email}`}
+                    className="text-blue-600 hover:underline"
+                  >
+                    {p.email}
+                  </a>
+                </td>
+                <td className="px-4 py-2">
+                  <a
+                    href={`tel:${p.phone}`}
+                    className="text-blue-600 hover:underline"
+                  >
+                    {p.phone}
+                  </a>
+                </td>
+                <td className="px-4 py-2">{p.order_id}</td>
+                <td className="px-4 py-2">{p.transaction_id}</td>
+                <td className="px-4 py-2">
+                  <span
+                    className={`inline-block px-2 py-1 text-xs rounded-full ${
+                      p.status === "success"
+                        ? "bg-green-100 text-green-800"
+                        : p.status === "pending"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {p.status}
+                  </span>
+                </td>
+                <td className="px-4 py-2">
+                  {new Date(p.payment_date).toLocaleString(undefined, {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </td>
+                <td className="px-4 py-2">{p.amount} UAH</td>
+                <td className="px-4 py-2 max-w-xs truncate">{p.description}</td>
               </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {payments.map((payment) => (
-                <tr
-                  key={payment.id}
-                  className="hover:bg-gray-50 transition-colors"
-                >
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {payment.name}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <a
-                      href={`mailto:${payment.email}`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      {payment.email}
-                    </a>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <a
-                      href={`tel:${payment.phone}`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      {payment.phone}
-                    </a>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.order_id}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.transaction_id}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                        payment.status === "success"
-                          ? "bg-green-100 text-green-800"
-                          : payment.status === "pending"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {payment.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(payment.payment_date).toLocaleString()}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {payment.amount} UAH
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">
-                    {payment.description}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Пагінація */}
+      <div className="flex gap-2 mt-6">
+        {Array.from({ length: totalPages }, (_, i) => (
+          <Link
+            key={i}
+            href={`/admin/payments?page=${i + 1}&search=${search}`}
+            className={`px-3 py-1 border rounded ${
+              page === i + 1
+                ? "bg-blue-500 text-white"
+                : "bg-white hover:bg-gray-100"
+            }`}
+          >
+            {i + 1}
+          </Link>
+        ))}
       </div>
     </div>
   );
 }
-
-export default PaymentsPage;
