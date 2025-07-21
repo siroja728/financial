@@ -1,19 +1,5 @@
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import { adminDb } from "@/lib/adminFirebase";
 import Payment from "@/types/Payment";
-
-export async function getPayments(): Promise<Payment[]> {
-  const paymentsRef = collection(db, "payments");
-  const q = query(paymentsRef, orderBy("payment_date", "desc"));
-
-  const snapshot = await getDocs(q);
-
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  })) as Payment[];
-}
 
 const PAGE_SIZE = 10;
 
