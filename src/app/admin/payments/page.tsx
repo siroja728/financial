@@ -7,10 +7,10 @@ const PAGE_SIZE = 10;
 export default async function PaymentsPage({
   searchParams,
 }: {
-  searchParams: { page?: string; search?: string };
+  searchParams?: { page?: string; search?: string };
 }): Promise<JSX.Element> {
-  const page = parseInt(searchParams.page || "1", 10);
-  const search = searchParams.search || "";
+  const page = parseInt(searchParams?.page || "1", 10);
+  const search = searchParams?.search || "";
   const { payments, totalCount } = await getPaymentsPaginated({
     page,
     search,
