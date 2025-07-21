@@ -9,6 +9,8 @@ import ContactUs from "@/components/sections/ContactUs";
 import { getTariffs } from "@/lib/api-handlers/tariffs";
 import { getAllSettingsAdmin } from "@/lib/api-handlers/adminSettings";
 
+export const revalidate = 60;
+
 export const metadata = {
   title: "VR-invest - Financial Courses",
   description: "Learn finance with our comprehensive courses",
