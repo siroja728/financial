@@ -7,7 +7,7 @@ import Footer from "@/components/sections/Footer";
 import ContactUs from "@/components/sections/ContactUs";
 
 import { getTariffs } from "@/lib/api-handlers/tariffs";
-import { getAllSettings } from "@/lib/api-handlers/settings";
+import { getAllSettingsAdmin } from "@/lib/api-handlers/adminSettings";
 
 export const metadata = {
   title: "VR-invest - Financial Courses",
@@ -17,7 +17,7 @@ export const metadata = {
 export default async function Home() {
   const tariffs = await getTariffs();
   const sortedTariffs = tariffs.sort((a, b) => a.order - b.order);
-  const settings = await getAllSettings();
+  const settings = await getAllSettingsAdmin();
 
   return (
     <>
