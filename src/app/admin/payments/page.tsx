@@ -4,13 +4,21 @@ import { JSX } from "react/jsx-dev-runtime";
 
 const PAGE_SIZE = 10;
 
+type PageProps = {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
 export default async function PaymentsPage({
   searchParams,
-}: {
-  searchParams?: { page?: string; search?: string };
-}): Promise<JSX.Element> {
-  const page = parseInt(searchParams?.page || "1", 10);
-  const search = searchParams?.search || "";
+}: PageProps): Promise<JSX.Element> {
+  const pageRaw = searchParams["page"];
+  const searchRaw = searchParams["search"];
+
+  const page = parseInt(
+    Array.isArray(pageRaw) ? pageRaw[0] : pageRaw || "1",
+    10
+  );
+  const search = Array.isArray(searchRaw) ? searchRaw[0] : searchRaw || "";
   const { payments, totalCount } = await getPaymentsPaginated({
     page,
     search,
