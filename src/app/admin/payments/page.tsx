@@ -1,24 +1,19 @@
 import { getPaymentsPaginated } from "@/lib/api-handlers/adminPayments";
 import Link from "next/link";
-import { JSX } from "react/jsx-dev-runtime";
+
+interface Props {
+  searchParams: {
+    page?: string;
+    search?: string;
+  };
+}
 
 const PAGE_SIZE = 10;
 
-type PageProps = {
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export default async function PaymentsPage({
-  searchParams,
-}: PageProps): Promise<JSX.Element> {
-  const pageRaw = searchParams["page"];
-  const searchRaw = searchParams["search"];
-
-  const page = parseInt(
-    Array.isArray(pageRaw) ? pageRaw[0] : pageRaw || "1",
-    10
-  );
-  const search = Array.isArray(searchRaw) ? searchRaw[0] : searchRaw || "";
+export default async function PaymentsPage({ searchParams }: Props) {
+  const searchParamsData = await searchParams;
+  const page = parseInt(searchParamsData.page || "1", 10);
+  const search = searchParamsData.search || "";
   const { payments, totalCount } = await getPaymentsPaginated({
     page,
     search,
