@@ -1,16 +1,14 @@
 import { getPaymentsPaginated } from "@/lib/api-handlers/adminPayments";
 import Link from "next/link";
-
-interface Props {
-  searchParams: {
-    page?: string;
-    search?: string;
-  };
-}
+import { JSX } from "react/jsx-dev-runtime";
 
 const PAGE_SIZE = 10;
 
-export default async function PaymentsPage({ searchParams }: Props) {
+export default async function PaymentsPage({
+  searchParams,
+}: {
+  searchParams: { page?: string; search?: string };
+}): Promise<JSX.Element> {
   const page = parseInt(searchParams.page || "1", 10);
   const search = searchParams.search || "";
   const { payments, totalCount } = await getPaymentsPaginated({
