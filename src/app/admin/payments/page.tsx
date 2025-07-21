@@ -2,10 +2,10 @@ import { getPaymentsPaginated } from "@/lib/api-handlers/adminPayments";
 import Link from "next/link";
 
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     page?: string;
     search?: string;
-  };
+  }>;
 }
 
 const PAGE_SIZE = 10;
