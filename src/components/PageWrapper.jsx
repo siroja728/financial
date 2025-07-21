@@ -1,20 +1,9 @@
-"use client";
 import Link from "next/link";
 
-import { useAuth } from "@/context/AuthProvider";
+import { isAuthenticated } from "@/lib/auth-server";
 
-function PageWrapper({ children }) {
-  const { loading, authenticated } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="fixed inset-0 bg-white/70 backdrop-blur flex items-center justify-center z-50">
-        <div className="bg-white p-6">
-          <p className="text-lg font-medium">Завантаження...</p>
-        </div>
-      </div>
-    );
-  }
+async function PageWrapper({ children }) {
+  const authenticated = await isAuthenticated();
 
   if (!authenticated) {
     return (

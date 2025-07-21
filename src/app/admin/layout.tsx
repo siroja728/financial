@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { AuthProvider } from "@/context/AuthProvider";
 import PageWrapper from "@/components/PageWrapper";
 import AdminHeader from "@/app/admin/components/AdminHeader";
 
@@ -99,10 +98,8 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <AuthProvider>
-      <PageWrapper>
-        <Content>{children}</Content>
-      </PageWrapper>
-    </AuthProvider>
+    <PageWrapper>
+      <Content>{children}</Content>
+    </PageWrapper>
   );
 }
