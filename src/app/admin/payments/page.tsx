@@ -14,6 +14,8 @@ export default async function PaymentsPage({ searchParams }: Props) {
   const { page, search } = await searchParams;
   const currentPage = page ? parseInt(page, 10) : 1;
 
+  return null;
+
   const { payments, totalCount } = await getPaymentsPaginated({
     page: currentPage,
     search: search || "",
