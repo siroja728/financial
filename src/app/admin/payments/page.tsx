@@ -1,11 +1,13 @@
 import { getPaymentsPaginated } from "@/lib/api-handlers/adminPayments";
 import Link from "next/link";
 
+// TODO: Need to figure out why searchParams is Promise and not object
+//       Maybe because of Next.js 13.4+ and app directory usage?
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     page?: string;
     search?: string;
-  };
+  }>;
 }
 
 const PAGE_SIZE = 10;
