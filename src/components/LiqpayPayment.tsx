@@ -15,21 +15,29 @@ interface FormData {
 }
 
 function LiqpayPayment({
+  enableLiqpay = false,
   tariff,
   onFormSubmit = () => {},
 }: {
+  enableLiqpay?: boolean;
   tariff?: Tariff | null;
   onFormSubmit?: () => void;
 }) {
   const [showForm, setShowForm] = useState(true);
+  const [registered, setRegistered] = useState(false);
 
   const handleGetPaymentForm = async (formData: FormData) => {
+    if (!enableLiqpay) {
+      alert("Liqpay payments are not enabled.");
+      return;
+    }
+
     const res = await fetch("/api/payments/liqpay/create-link", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         amount: tariff?.price,
-        currency: "UAH",
+        currency: "USD",
         description: `Оплата тарифу ${tariff?.name} від ${formData.first_name} ${formData.last_name}`,
         phone: formData.phone,
         email: formData.email,
@@ -77,6 +85,10 @@ function LiqpayPayment({
       order_id: orderId,
     };
 
+    const description = enableLiqpay
+      ? `Оплата тарифу "${tariff?.name}" від "${data.first_name} ${data.last_name}"`
+      : `Реєстрація на тариф "${tariff?.name}" від "${data.first_name} ${data.last_name}"`;
+
     await createPayment({
       payment: {
         order_id: orderId,
@@ -85,17 +97,32 @@ function LiqpayPayment({
         name: data.first_name + " " + data.last_name,
         email: data.email,
         phone: data.phone,
-        description: `Оплата тарифу "${tariff?.name}" від "${data.first_name} ${data.last_name}
-        `,
+        description,
+        currency: "USD",
         amount: tariff?.price || 0,
-        status: "pending",
+        status: enableLiqpay ? "pending" : "manual_registration",
         payment_date: new Date().toISOString(),
       },
     });
 
-    setShowForm(false);
-    handleGetPaymentForm(data);
+    if (enableLiqpay) {
+      setShowForm(false);
+      handleGetPaymentForm(data);
+    } else {
+      setRegistered(true);
+    }
   };
+
+  if (registered) {
+    return (
+      <div className="text-center p-6">
+        <h2 className="text-2xl font-bold mb-4">Ви успішно зареєстровані!</h2>
+        <p className="text-lg">
+          Дякуємо за реєстрацію! Ми зв&apos;яжемося з вами найближчим часом.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-6">
@@ -141,9 +168,9 @@ function LiqpayPayment({
           </label>
           <button
             type="submit"
-            className="flex-1 bg-green text-white py-2 rounded hover:bg-green-700 transition cursor-pointer text-center"
+            className="flex-1 bg-green text-white py-2 rounded hover:bg-green-700 transition cursor-pointer text-center mt-4"
           >
-            Перейти до оплати
+            {enableLiqpay ? "Перейти до оплати" : "Зареєструватися"}
           </button>
         </form>
       )}

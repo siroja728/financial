@@ -26,7 +26,7 @@ export default async function Home() {
       <Header />
       <Hero settings={settings.hero_block} />
       <About about={settings.personal_info} />
-      <Tariffs tariffs={sortedTariffs} />
+      <Tariffs tariffs={sortedTariffs} settings={settings.admin} />
       <Reviews />
       <ContactUs
         contactInfo={settings.contact_info}

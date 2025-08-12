@@ -4,13 +4,22 @@ import { useState } from "react";
 import LiqpayPayment from "@/components/LiqpayPayment";
 
 import Tariff from "@/types/Tariff";
+import { AdminSettings } from "@/types/Settings";
 
-function Tariffs({ tariffs }: { tariffs: Tariff[] }) {
+function Tariffs({
+  tariffs,
+  settings,
+}: {
+  tariffs: Tariff[];
+  settings: AdminSettings;
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTariff, setSelectedTariff] = useState<Tariff | null>(null);
   const [expandedTariffs, setExpandedTariffs] = useState<Set<string>>(
     new Set()
   );
+  const { enable_liqpay: enableLiqpay, currency } = settings;
+  const currencySymbol = currency === "UAH" ? "грн" : "$";
 
   const handleBuyClick = (selectedTariff: Tariff) => {
     setSelectedTariff(selectedTariff);
@@ -57,7 +66,7 @@ function Tariffs({ tariffs }: { tariffs: Tariff[] }) {
                   {tariff.name}
                 </h3>
                 <p className="text-gray-700 mb-4 text-2xl font-bold text-center">
-                  {tariff.price} грн/місяць
+                  {tariff.price} {currencySymbol}/місяць
                 </p>
                 <div className="flex flex-col">
                   <div
@@ -79,7 +88,7 @@ function Tariffs({ tariffs }: { tariffs: Tariff[] }) {
                 onClick={() => handleBuyClick(tariff)}
                 className="mt-4 bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700 transition cursor-pointer flex-shrink-0"
               >
-                Купити
+                {enableLiqpay ? "Купити" : "Зареєструватися"}
               </button>
             </div>
           );
@@ -116,20 +125,24 @@ function Tariffs({ tariffs }: { tariffs: Tariff[] }) {
               </svg>
             </button>
             <h3 className="text-xl font-bold text-green-800 mb-4 text-center">
-              Купівля тарифу: {selectedTariff?.name}
+              {enableLiqpay
+                ? `Оплата за тарифом ${selectedTariff?.name}`
+                : "Реєстрація на тариф"}
             </h3>
-            <p className="text-gray-700 mb-4">
-              Ви обрали тариф&nbsp;
-              <span className="font-bold">{selectedTariff?.name}</span>. Будь
-              ласка, заповніть форму та здійсніть оплату. Всю додаткову
-              інформацію буде надіслано на вашу електронну пошту після успішної
-              оплати.
-            </p>
-            <p className="text-gray-700 mb-4">
-              Ми не передаємо ваші дані третім особам і використовуємо їх лише
-              для обробки платежів та надання послуг.
-            </p>
+            {enableLiqpay ? (
+              <p className="text-gray-700">
+                Будь ласка, заповніть форму та здійсніть оплату. Всю додаткову
+                інформацію буде надіслано на вашу електронну пошту після
+                успішної оплати.
+              </p>
+            ) : (
+              <p className="text-gray-700">
+                Будь ласка, заповніть форму реєстрації. Всю додаткову інформацію
+                буде надіслано на вашу електронну адресу після реєстрації.
+              </p>
+            )}
             <LiqpayPayment
+              enableLiqpay={settings.enable_liqpay}
               tariff={selectedTariff}
               onFormSubmit={() => setIsModalOpen(false)}
             />

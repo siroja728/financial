@@ -101,7 +101,9 @@ export default async function PaymentsPage({ searchParams }: Props) {
                     minute: "2-digit",
                   })}
                 </td>
-                <td className="px-4 py-2">{p.amount} UAH</td>
+                <td className="px-4 py-2">
+                  {p.amount} {p.currency}
+                </td>
                 <td className="px-4 py-2 max-w-xs truncate">{p.description}</td>
               </tr>
             ))}

@@ -10,4 +10,5 @@ export default interface Payment {
   status: string;
   payment_date: string;
   phone: string;
+  currency: "UAH" | "USD";
 }

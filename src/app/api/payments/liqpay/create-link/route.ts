@@ -1,4 +1,5 @@
 import { liqpayData, liqpaySignature } from "@/lib/liqpay";
+import { getSettings } from "@/lib/api-handlers/settings";
 
 const PUBLIC_KEY = process.env.LIQPAY_PUBLIC_KEY!;
 const PRIVATE_KEY = process.env.LIQPAY_PRIVATE_KEY!;
@@ -7,6 +8,7 @@ const RESULT_URL = process.env.LIQPAY_RESULT_URL!;
 
 export async function POST(req: Request) {
   const body = await req.json();
+  const adminSettings = await getSettings({ setting_name: "admin" });
 
   const { amount, description, order_id, name, phone, email } = body;
 
@@ -20,7 +22,7 @@ export async function POST(req: Request) {
     public_key: PUBLIC_KEY,
     version: "3",
     action: "pay",
-    currency: "UAH",
+    currency: adminSettings.currency,
     language: "uk",
     result_url: RESULT_URL,
     server_url: SERVER_URL,

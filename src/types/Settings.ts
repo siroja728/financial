@@ -1,5 +1,7 @@
 export interface AdminSettings {
   email: string;
+  enable_liqpay: boolean;
+  currency: "UAH" | "USD";
 }
 
 export interface ContactInfo {
