@@ -1,4 +1,13 @@
-import { collection, getDocs, addDoc, where, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  where,
+  query,
+  updateDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Review from "@/types/Review";
 
@@ -32,5 +41,23 @@ export async function createReview({
   } catch (error) {
     console.error("Error creating review: ", error);
     throw new Error("Failed to create review");
+  }
+}
+
+export async function updateReview({
+  id,
+  review,
+}: {
+  id: string;
+  review: Partial<Omit<Review, "id">>;
+}): Promise<Review> {
+  try {
+    const docRef = doc(db, "reviews", id);
+    await updateDoc(docRef, review);
+    const updatedDoc = await getDoc(docRef);
+    return { id: updatedDoc.id, ...updatedDoc.data() } as Review;
+  } catch (error) {
+    console.error("Error updating review: ", error);
+    throw new Error("Failed to update review");
   }
 }

@@ -56,6 +56,27 @@ const Content = async ({ children }: { children: React.ReactNode }) => {
               </li>
               <li>
                 <Link
+                  href="/admin/reviews"
+                  className="block p-2 hover:bg-gray-200 rounded flex items-center"
+                >
+                  <svg
+                    className="w-5 h-5 mr-2 md:mr-2 mr-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span className="hidden md:block">Відгуки</span>
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/admin/settings"
                   className="block p-2 hover:bg-gray-200 rounded flex items-center"
                 >

@@ -53,11 +53,12 @@ function TariffsTable({ tariffs }: { tariffs: Tariff[] }) {
     setIsDeleteModalOpen(true);
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     if (tariffToDelete) {
-      deleteTariff(tariffToDelete.id);
+      await deleteTariff(tariffToDelete.id);
       setIsDeleteModalOpen(false);
       setTariffToDelete(null);
+      window.location.reload();
     }
   };
 
@@ -66,7 +67,7 @@ function TariffsTable({ tariffs }: { tariffs: Tariff[] }) {
     setTariffToDelete(null);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (formData.id) {
       const tariff = {
         ...formData,
@@ -77,7 +78,7 @@ function TariffsTable({ tariffs }: { tariffs: Tariff[] }) {
         price: parseFloat(formData.price),
       };
 
-      updateTariff({
+      await updateTariff({
         id: formData.id,
         tariff,
       });
@@ -92,12 +93,13 @@ function TariffsTable({ tariffs }: { tariffs: Tariff[] }) {
         description: formData.description,
       };
 
-      createTariff({
+      await createTariff({
         tariff,
       });
     }
     setIsModalOpen(false);
     setIsCreating(false);
+    window.location.reload();
   };
 
   const handleCancel = () => {

@@ -58,6 +58,13 @@ export default async function PaymentsPage({ searchParams }: Props) {
             </tr>
           </thead>
           <tbody>
+            {payments.length === 0 && (
+              <tr>
+                <td colSpan={9} className="px-4 py-2 text-center text-gray-500">
+                  Немає платежів
+                </td>
+              </tr>
+            )}
             {payments.map((p) => (
               <tr key={p.id} className="border-t hover:bg-gray-50">
                 <td className="px-4 py-2">{p.name}</td>
@@ -116,7 +123,7 @@ export default async function PaymentsPage({ searchParams }: Props) {
         {Array.from({ length: totalPages }, (_, i) => (
           <Link
             key={i}
-            href={`/admin/payments?page=${i + 1}&search=${search}`}
+            href={`/admin/payments?page=${i + 1}&search=${search || ""}`}
             className={`px-3 py-1 border rounded ${
               currentPage === i + 1
                 ? "bg-blue-500 text-white"
