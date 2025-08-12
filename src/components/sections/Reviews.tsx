@@ -13,6 +13,7 @@ const initialFormData = {
   review: "",
   rating: 5,
   show_on_landing: false,
+  created_at: new Date().toISOString(),
 };
 
 function Reviews() {

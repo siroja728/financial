@@ -6,4 +6,5 @@ export default interface Review {
   rating: number;
   review: string;
   show_on_landing: boolean;
+  created_at: string;
 }

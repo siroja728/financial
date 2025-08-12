@@ -14,7 +14,7 @@ export async function getReviewsPaginated({
 }): Promise<{ reviews: Review[]; hasMore: boolean; totalCount: number }> {
   const offset = (page - 1) * pageSize;
 
-  const ref = adminDb.collection("reviews");
+  const ref = adminDb.collection("reviews").orderBy("created_at", "desc");
 
   const allSnapshot = await ref.get();
   const allDocs = allSnapshot.docs;

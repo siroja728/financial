@@ -1,5 +1,8 @@
-import { getPaymentsPaginated } from "@/lib/api-handlers/adminPayments";
 import Link from "next/link";
+
+import ChangeStatus from "@/app/admin/payments/components/ChangeStatus";
+
+import { getPaymentsPaginated } from "@/lib/api-handlers/adminPayments";
 
 interface Props {
   searchParams: Promise<{
@@ -86,7 +89,7 @@ export default async function PaymentsPage({ searchParams }: Props) {
                 </td>
                 <td className="px-4 py-2">{p.order_id}</td>
                 <td className="px-4 py-2">{p.transaction_id}</td>
-                <td className="px-4 py-2">
+                {/* <td className="px-4 py-2">
                   <span
                     className={`inline-block px-2 py-1 text-xs rounded-full ${
                       p.status === "success"
@@ -98,7 +101,8 @@ export default async function PaymentsPage({ searchParams }: Props) {
                   >
                     {p.status}
                   </span>
-                </td>
+                </td> */}
+                <ChangeStatus payment={p} />
                 <td className="px-4 py-2">
                   {new Date(p.payment_date).toLocaleString(undefined, {
                     year: "numeric",
