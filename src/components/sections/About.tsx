@@ -24,7 +24,9 @@ function About({ about }: { about: PersonalInfo }) {
         <h2 className="font-bold text-4xl text-green-800 text-center lg:text-left">
           {`Про ${about.first_name} ${about.last_name}`}
         </h2>
-        <p className="text-center lg:text-left">{about.about_me}</p>
+        <p className="text-center lg:text-left whitespace-pre-wrap">
+          {about.about_me}
+        </p>
       </div>
     </section>
   );

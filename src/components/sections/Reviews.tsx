@@ -143,7 +143,7 @@ function Reviews() {
                       key={star}
                       type="button"
                       onClick={() => setFormData({ ...formData, rating: star })}
-                      className={`text-2xl ${
+                      className={`text-2xl cursor-pointer ${
                         star <= formData.rating
                           ? "text-yellow-400"
                           : "text-gray-300"
@@ -172,14 +172,14 @@ function Reviews() {
               <div className="flex gap-4">
                 <button
                   type="submit"
-                  className="flex-1 bg-green text-white py-2 rounded-lg hover:bg-green-700 transition"
+                  className="flex-1 bg-green text-white py-2 rounded-lg hover:bg-green-700 transition cursor-pointer"
                 >
                   Відправити
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 transition"
+                  className="flex-1 bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 transition cursor-pointer"
                 >
                   Скасувати
                 </button>

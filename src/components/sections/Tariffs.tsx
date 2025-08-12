@@ -70,7 +70,7 @@ function Tariffs({
                 </p>
                 <div className="flex flex-col">
                   <div
-                    className={`text-gray-700 ${
+                    className={`text-gray-700 whitespace-pre-wrap ${
                       isExpanded ? "" : "line-clamp-4 overflow-hidden"
                     }`}
                   >
