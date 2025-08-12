@@ -1,9 +1,5 @@
 import Link from "next/link";
-import {
-  getReviewsPaginated,
-  updateReview,
-} from "@/lib/api-handlers/adminReviews";
-import Review from "@/types/Review";
+import { getReviewsPaginated } from "@/lib/api-handlers/adminReviews";
 
 import ReviewsTable from "@/app/admin/reviews/components/ReviewsTable";
 
