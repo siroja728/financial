@@ -12,13 +12,16 @@ interface FormData {
   phone: string;
   tariff: Tariff | null | undefined;
   order_id: string;
+  currency: "UAH" | "USD";
 }
 
 function LiqpayPayment({
   enableLiqpay = false,
+  currency = "UAH",
   tariff,
   onFormSubmit = () => {},
 }: {
+  currency?: "UAH" | "USD";
   enableLiqpay?: boolean;
   tariff?: Tariff | null;
   onFormSubmit?: () => void;
@@ -37,7 +40,7 @@ function LiqpayPayment({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         amount: tariff?.price,
-        currency: "USD",
+        currency,
         description: `Оплата тарифу ${tariff?.name} від ${formData.first_name} ${formData.last_name}`,
         phone: formData.phone,
         email: formData.email,
@@ -83,6 +86,7 @@ function LiqpayPayment({
       phone: formData.get("phone") as string,
       tariff: tariff,
       order_id: orderId,
+      currency: currency,
     };
 
     const description = enableLiqpay
@@ -98,7 +102,7 @@ function LiqpayPayment({
         email: data.email,
         phone: data.phone,
         description,
-        currency: "USD",
+        currency,
         amount: tariff?.price || 0,
         status: enableLiqpay ? "pending" : "manual_registration",
         payment_date: new Date().toISOString(),

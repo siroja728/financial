@@ -143,6 +143,7 @@ function Tariffs({
             )}
             <LiqpayPayment
               enableLiqpay={settings.enable_liqpay}
+              currency={settings.currency}
               tariff={selectedTariff}
               onFormSubmit={() => setIsModalOpen(false)}
             />
